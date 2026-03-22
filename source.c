@@ -65,12 +65,12 @@ char *wpad_buttons_char_2[WPAD_BUTTON_COUNT] = {
 
 void clear(){
 	printf("\x1b[2J");
-	printf("                   _______ _____ _______ \n");
+	printf("                 _______ _____ _______ \n");
     printf("    \\ \\        / /_   _|_   _|__   __|\n");
     printf("     \\ \\  /\\  / /  | |   | |    | |   \n");
     printf("      \\ \\/  \\/ /   | |   | |    | |   \n");
-    printf("        \\  /\\  /   _| |_ _| |_   | |   \n");
-    printf("         \\/  \\/   |_____|_____|  |_|   \n");
+    printf("       \\  /\\  /   _| |_ _| |_   | |   \n");
+    printf("        \\/  \\/   |_____|_____|  |_|   \n");
     printf("                                       \n");
     printf("                                       \n");
 
