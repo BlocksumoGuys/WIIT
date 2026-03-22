@@ -1,0 +1,8 @@
+<app version="1.0">
+<name>WIIT</name>
+<coder>BlocksumoGuys</coder>
+<version>1.0</version>
+<release_date>20260322</release_date>
+<short_description>Wii's Input Tester.</short_description>
+<long_description> A minimal Wii Input Tester! This software is compatible with: --Wiimote --Nunchuk (More probably coming soon). </long_description>
+</app>
