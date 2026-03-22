@@ -87,15 +87,19 @@ void replaceString(char *str, char *newStr) {
 }
 
 int fwiimote(){
-	if (menu != 1){return -1;}
 	clear();
 	for(u8 i = 0; i < WPAD_BUTTON_COUNT; i++){
 		printf("%s\n", wpad_buttons_char[i]);
 	}
 }
 int fnunchuk(){
-	if (menu != 2){return -1;}
 	clear();
+	u32 exp_type;
+	WPAD_Probe(0, &exp_type);
+	if(!(exp_type == WPAD_EXP_NUNCHUK)){
+		printf("No Nunchuk found, please plug a Nunchuk controller in.");
+		return -1;
+	}
 	for(u8 i = 0; i < NCK_BUTTON_COUNT; i++){
 		printf("%s\n", nck_buttons_char[i]);
 	}
@@ -103,7 +107,6 @@ int fnunchuk(){
 	printf("Press HOME twice to go back.");
 }
 int fmenu(u8 opt){
-	if (menu != 0){return -1;}
 	switch (opt)
 		{
 			case 0:
@@ -149,11 +152,19 @@ int main(int argc, char **argv) {
 	while(SYS_MainLoop()) {
 		WPAD_ScanPads();
 		u32 pressed = WPAD_ButtonsDown(0);
-		if (pressed && menu == 1){
-			for(u8 i = 0; i < WPAD_BUTTON_COUNT; i++){
-				if(pressed & wpad_buttons[i]){		
-					replaceString(wpad_buttons_char[i], wpad_buttons_char_2[i]);
-					fwiimote();
+		if(pressed){
+			if(menu == 1){
+				for(u8 i = 0; i < WPAD_BUTTON_COUNT; i++){
+					if(pressed & wpad_buttons[i]){		
+						replaceString(wpad_buttons_char[i], wpad_buttons_char_2[i]);
+					}
+				}
+			}
+			if(menu == 2){
+				for(u8 i = 0; i < NCK_BUTTON_COUNT; i++){
+					if(pressed & nck_buttons[i]){		
+						replaceString(nck_buttons_char[i], nck_buttons_char_2[i]);
+					}
 				}
 			}
 		}
@@ -172,12 +183,10 @@ int main(int argc, char **argv) {
 				case 0:
 					clear();
 					menu = 1;
-					fwiimote();
 					break;
 				case 1:
 					clear();
 					menu = 2;
-					fnunchuk();
 					break;
 				case 2:
 					clear();
@@ -188,16 +197,18 @@ int main(int argc, char **argv) {
 					break;
 			}
 		}
-		if (pressed & WPAD_BUTTON_DOWN){
+		if (pressed & WPAD_BUTTON_DOWN && menu == 0){
 			opt += 1;
 		}
-		if (pressed & WPAD_BUTTON_UP){
+		if (pressed & WPAD_BUTTON_UP && menu == 0){
 			opt -= 1;
 		}
 		if (opt > opt_limit){
 			opt = 0;
 		}
-		fmenu(opt);
+		if(menu == 0) {fmenu(opt);}
+		if(menu == 1) {fwiimote();}
+		if(menu == 2) {fnunchuk();}
 		VIDEO_WaitVSync();
 	}
 
