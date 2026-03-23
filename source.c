@@ -26,15 +26,15 @@ u32 nck_buttons[NCK_BUTTON_COUNT] = {
 	WPAD_NUNCHUK_BUTTON_C,
 	WPAD_NUNCHUK_BUTTON_Z
 };
-char *nck_buttons_char[NCK_BUTTON_COUNT] = {
+char nck_buttons_char[NCK_BUTTON_COUNT][64] = {
 	"Button C   :   Waiting for Input..",
 	"Button Z   :   Waiting for Input.."
 };
-char *nck_buttons_char_2[NCK_BUTTON_COUNT] = {
+char nck_buttons_char_2[NCK_BUTTON_COUNT][64] = {
 	"Button C   :   CHECKED",
 	"Button Z   :   CHECKED"
 };
-char *wpad_buttons_char[WPAD_BUTTON_COUNT] = {
+char wpad_buttons_char[WPAD_BUTTON_COUNT][64] = {
 	"Button 1   :   Waiting for Input..",
     "Button 2   :   Waiting for Input..",
     "Button B   :   Waiting for Input..",
@@ -48,7 +48,7 @@ char *wpad_buttons_char[WPAD_BUTTON_COUNT] = {
     "Button plus (+)   :   Waiting for Input.."
 };
 
-char *wpad_buttons_char_2[WPAD_BUTTON_COUNT] = {
+char wpad_buttons_char_2[WPAD_BUTTON_COUNT][64] = {
 	"Button 1   :   CHECKED",
     "Button 2   :   CHECKED",
     "Button B   :   CHECKED",
@@ -76,14 +76,8 @@ void clear(){
 
 }
 
-
-void replaceString(char *str, char *newStr) {
-    u32 i = 0;
-    while (newStr[i] != '\0') {
-        str[i] = newStr[i];
-        i++;
-    }
-    str[i] = '\0';
+void replaceString(char *str, char *newstr){
+	strcpy(str, newstr);
 }
 
 int fwiimote(){
